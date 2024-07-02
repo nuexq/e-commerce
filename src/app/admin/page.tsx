@@ -26,7 +26,7 @@ export default async function AdminDashboard() {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <DashboardCard
         title="Sales"
-        subtitle={formatNumber(salesData.numberOfSales)}
+        subtitle={`${formatNumber(salesData.numberOfSales)} Orders`}
         body={formatCurrency(salesData.amount)}
       />
     </div>
