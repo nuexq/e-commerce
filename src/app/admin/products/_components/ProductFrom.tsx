@@ -8,6 +8,7 @@ import { formatCurrency } from "@/lib/formations";
 import { useState } from "react";
 import { addProduct } from "../../_actions/products";
 import { useFormState, useFormStatus } from "react-dom";
+import { Loader2 } from "lucide-react";
 
 export function ProductForm() {
   const [error, action] = useFormState(addProduct, {});
@@ -67,7 +68,16 @@ function SubmitButton() {
   const { pending } = useFormStatus();
   return (
     <Button type="submit" disabled={pending}>
-      {pending ? "Saving.." : "Save"}
+      {pending ? (
+        <>
+          <div className="flex justify-center items-center gap-2">
+            <Loader2 className="size-4 animate-spin" />
+            <span>saving</span>
+          </div>
+        </>
+      ) : (
+        "Save"
+      )}
     </Button>
   );
 }
