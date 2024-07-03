@@ -16,5 +16,10 @@ const addSchema = z.object({
 });
 
 export async function addProduct(formData: FormData) {
-  console.log(formData);
+  const result = addSchema.safeParse(Object.fromEntries(formData.entries()));
+  if (result.success === false) {
+    return result.error.formErrors.fieldErrors;
+  }
+
+  const data = result.data;
 }
