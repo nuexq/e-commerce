@@ -19,11 +19,11 @@ export function ProductForm() {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="price">Price Iin Cents</Label>
+        <Label htmlFor="priceInCents">Price Iin Cents</Label>
         <Input
-          type="price"
-          id="price"
-          name="price"
+          type="number"
+          id="priceInCents"
+          name="priceInCents"
           required
           value={priceInCents}
           onChange={(e) => setPriceInCents(Number(e.target.value) || undefined)}
