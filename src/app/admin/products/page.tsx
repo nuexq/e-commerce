@@ -4,11 +4,14 @@ import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import db from "@/db/db";
+import { CheckCircle2, MoreVertical, XCircle } from "lucide-react";
+import { formatCurrency, formatNumber } from "@/lib/formations";
 
 export default function AdminProductPage() {
   return (
@@ -53,7 +56,32 @@ async function ProductsTable() {
           </TableHead>
         </TableRow>
       </TableHeader>
-      <TableBody></TableBody>
+      <TableBody>
+        {products.map((product) => (
+          <TableRow key={product.id}>
+            <TableCell>
+              {product.isAvailableForPurchase ? (
+                <>
+                  <CheckCircle2 />
+                  <span className="sr-only">Available</span>
+                </>
+              ) : (
+                <>
+                  <XCircle />
+                  <span className="sr-only">Unavailable</span>
+                </>
+              )}
+            </TableCell>
+            <TableCell>{product.name}</TableCell>
+            <TableCell>{formatCurrency(product.priceInCents / 100)}</TableCell>
+            <TableCell>{formatNumber(product._count.orders)}</TableCell>
+            <TableCell>
+              <MoreVertical />
+              <span className="sr-only">actions</span>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
     </Table>
   );
 }
