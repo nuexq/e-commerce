@@ -84,7 +84,7 @@ async function ProductsTable() {
                 </>
               ) : (
                 <>
-                  <XCircle />
+                  <XCircle className="stroke-destructive" />
                   <span className="sr-only">Unavailable</span>
                 </>
               )}
