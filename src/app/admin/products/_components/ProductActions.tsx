@@ -56,6 +56,7 @@ export function DeleteDropdownItem({
   return (
     <DropdownMenuItem
       className="flex items-center gap-3"
+      variant="destructive"
       disabled={disabled || isPending}
       onClick={() => {
         startTransition(async () => {
