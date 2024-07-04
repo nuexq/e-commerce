@@ -10,8 +10,20 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import db from "@/db/db";
-import { CheckCircle2, MoreVertical, XCircle } from "lucide-react";
+import {
+  CheckCircle2,
+  Download,
+  Edit3,
+  MoreVertical,
+  XCircle,
+} from "lucide-react";
 import { formatCurrency, formatNumber } from "@/lib/formations";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default function AdminProductPage() {
   return (
@@ -76,8 +88,33 @@ async function ProductsTable() {
             <TableCell>{formatCurrency(product.priceInCents / 100)}</TableCell>
             <TableCell>{formatNumber(product._count.orders)}</TableCell>
             <TableCell>
-              <MoreVertical />
-              <span className="sr-only">actions</span>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <MoreVertical />
+                  <span className="sr-only">actions</span>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem asChild>
+                    <a
+                      download
+                      href={`/admin/products/${product.id}/download`}
+                      className="flex items-center gap-3"
+                    >
+                      <Download className="size-4" />
+                      Download
+                    </a>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link
+                      href={`/admin/products/${product.id}/edit`}
+                      className="flex items-center gap-3"
+                    >
+                      <Edit3 className="size-4" />
+                      Edit
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </TableCell>
           </TableRow>
         ))}
