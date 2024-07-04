@@ -7,6 +7,7 @@ import {
   toggleProductAvailability,
 } from "../../_actions/products";
 import { useRouter } from "next/navigation";
+import { CheckCircle2, Trash2, XCircle } from "lucide-react";
 
 export function ActiveToggleDropdownItem({
   id,
@@ -19,6 +20,7 @@ export function ActiveToggleDropdownItem({
   const router = useRouter();
   return (
     <DropdownMenuItem
+      className="flex items-center gap-3"
       disabled={isPending}
       onClick={() => {
         startTransition(async () => {
@@ -27,7 +29,17 @@ export function ActiveToggleDropdownItem({
         });
       }}
     >
-      {isAvailableForPurchase ? "Deactivate" : "Activate"}
+      {isAvailableForPurchase ? (
+        <>
+          <XCircle className="size-4 " />
+          <span>Deactivate</span>
+        </>
+      ) : (
+        <>
+          <CheckCircle2 className="size-4" />
+          <span>Activate</span>
+        </>
+      )}
     </DropdownMenuItem>
   );
 }
@@ -43,7 +55,7 @@ export function DeleteDropdownItem({
   const router = useRouter();
   return (
     <DropdownMenuItem
-      variant="destructive"
+      className="flex items-center gap-3"
       disabled={disabled || isPending}
       onClick={() => {
         startTransition(async () => {
@@ -52,6 +64,7 @@ export function DeleteDropdownItem({
         });
       }}
     >
+      <Trash2 className="size-4" />
       Delete
     </DropdownMenuItem>
   );
