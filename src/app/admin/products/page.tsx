@@ -29,6 +29,7 @@ import {
   ActiveToggleDropdownItem,
   DeleteDropdownItem,
 } from "./_components/ProductActions";
+import Image from "next/image";
 
 export default function AdminProductPage() {
   return (
@@ -52,6 +53,7 @@ async function ProductsTable() {
       priceInCents: true,
       isAvailableForPurchase: true,
       _count: { select: { orders: true } },
+      imagePath: true,
     },
     orderBy: { name: "asc" },
   });
@@ -89,7 +91,15 @@ async function ProductsTable() {
                 </>
               )}
             </TableCell>
-            <TableCell>{product.name}</TableCell>
+            <TableCell className="flex gap-3">
+              <Image
+                src={product.imagePath}
+                alt="Product Image"
+                width={50}
+                height={50}
+              />
+              {product.name}
+            </TableCell>
             <TableCell>{formatCurrency(product.priceInCents / 100)}</TableCell>
             <TableCell>{formatNumber(product._count.orders)}</TableCell>
             <TableCell>
