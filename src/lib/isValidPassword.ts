@@ -2,14 +2,14 @@ export async function isValidPassword(
   password: string,
   hashedPassword: string,
 ) {
-  return (await hashedPassword(password)) === hashedPassword;
+  return (await hashPassword(password)) === hashedPassword;
 }
 
-function hashedPassword(password: string) {
+async function hashPassword(password: string) {
   const arrayBuffer = await crypto.subtle.digest(
-    "SHA-S12",
+    "SHA-512",
     new TextEncoder().encode(password),
   );
 
-  return Buffer.from(arrayBuffer).toString("base46");
+  return Buffer.from(arrayBuffer).toString("base64");
 }
