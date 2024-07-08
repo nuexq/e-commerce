@@ -12,14 +12,20 @@ import Link from "next/link";
 import Image from "next/image";
 
 type ProductCardProps = {
-  name: string
-  id: string
-  priceInCents: number
-  description: string
-  imagePath: string
-}
+  name: string;
+  id: string;
+  priceInCents: number;
+  description: string;
+  imagePath: string;
+};
 
-export function ProductCard({ name, priceInCents, description, id, imagePath }: ProductCardProps) {
+export function ProductCard({
+  name,
+  priceInCents,
+  description,
+  id,
+  imagePath,
+}: ProductCardProps) {
   return (
     <Card className="flex overflow-hidden flex-col">
       <div className="relative w-full h-auto aspect-video">
