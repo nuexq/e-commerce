@@ -1,4 +1,8 @@
+import { Button } from "@/components/ui/button";
 import db from "@/db/db";
+import { Product } from "@prisma/client";
+import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 function getMostPopularProducts() {
   return db.product.findMany({
@@ -17,5 +21,37 @@ function getNewestProducts() {
 }
 
 export default function HomePage() {
-  return <h1>hi</h1>;
+  return (
+    <main className="space-y-12">
+      <ProductGridSection
+        title="Most Popular"
+        productFetcher={getMostPopularProducts}
+      />
+      <ProductGridSection title="Newest" productFetcher={getNewestProducts} />
+    </main>
+  );
+}
+
+type ProductGridSectionProps = {
+  title: string;
+  productFetcher: () => Promise<Product[]>;
+};
+
+function ProductGridSection({
+  productFetcher,
+  title,
+}: ProductGridSectionProps) {
+  return (
+    <div className="space-y-4">
+      <div className="flex gap-4">
+        <h2 className="text-3xl font-bold">{title}</h2>
+        <Button variant="outline" asChild>
+          <Link href="/products" className="space-x-2">
+            <span>View All</span>
+            <ArrowRight className="size-4" />
+          </Link>
+        </Button>
+      </div>
+    </div>
+  );
 }
