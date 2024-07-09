@@ -31,7 +31,7 @@ export function ProductCard({
       <div className="relative w-full h-auto aspect-video">
         <Image src={imagePath} fill alt={name} />
       </div>
-      <CardHeader>
+      <CardHeader className="gap-2">
         <CardTitle>{name}</CardTitle>
         <CardDescription>{formatCurrency(priceInCents / 100)}</CardDescription>
       </CardHeader>
@@ -68,5 +68,5 @@ export function ProductCardSkeleton() {
         <Button className="w-full" disabled size="lg"></Button>
       </CardFooter>
     </Card>
-  )
+  );
 }
