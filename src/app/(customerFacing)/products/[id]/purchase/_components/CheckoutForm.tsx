@@ -73,6 +73,9 @@ function Form({ priceInCents }: { priceInCents: number }) {
     setIsLoading(true);
 
     // check for existing order
+    stripe.confirmPayment({ elements, confirmParams: {
+      return_url: `${process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY}/stripe/purchase-success`
+    }})
   }
 
   return (
