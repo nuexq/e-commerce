@@ -18,6 +18,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import Image from "next/image";
+import { FormEvent, useState } from "react";
 
 type CheckoutFormProps = {
   product: {
@@ -62,9 +63,20 @@ export function CheckoutForm({ product, clientSecret }: CheckoutFormProps) {
 function Form({ priceInCents }: { priceInCents: number }) {
   const stripe = useStripe();
   const elements = useElements();
+  const [isLoading, setIsLoading] = useState(false);
+
+  function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+
+    if (stripe == null || elements == null) return;
+
+    setIsLoading(true);
+
+    // check for existing order
+  }
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <Card>
         <CardHeader>
           <CardTitle>Checkout</CardTitle>
@@ -77,9 +89,11 @@ function Form({ priceInCents }: { priceInCents: number }) {
           <Button
             className="w-full"
             size="lg"
-            disabled={stripe == null || elements == null}
+            disabled={stripe == null || elements == null || isLoading}
           >
-            Purchase - {formatCurrency(priceInCents / 100)}
+            {isLoading
+              ? "Purchasing..."
+              : `Purchase - ${formatCurrency(priceInCents / 100)}`}
           </Button>
         </CardFooter>
       </Card>
