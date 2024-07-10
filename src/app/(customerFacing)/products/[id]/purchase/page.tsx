@@ -1,6 +1,7 @@
 import db from "@/db/db";
 import { notFound } from "next/navigation";
 import Stripe from "stripe";
+import { CheckoutForm } from "./_components/CheckoutForm";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
@@ -22,5 +23,10 @@ export default async function PurchasePage({
     throw Error("Stripe faild to create payment intent");
   }
 
-  return <h1>hi</h1>;
+  return (
+    <CheckoutForm
+      product={product}
+      clientSecret={paymentIntents.client_secret}
+    />
+  );
 }
