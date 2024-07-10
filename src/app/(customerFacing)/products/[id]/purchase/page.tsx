@@ -18,5 +18,9 @@ export default async function PurchasePage({
     metadata: { productId: product.id },
   });
 
+  if (paymentIntents.client_secret == null) {
+    throw Error("Stripe faild to create payment intent");
+  }
+
   return <h1>hi</h1>;
 }
