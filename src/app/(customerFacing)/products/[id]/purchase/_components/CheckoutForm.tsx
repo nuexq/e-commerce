@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { formatCurrency } from "@/lib/formatters";
+import { formatCurrency } from "@/lib/formations";
 import {
   Elements,
   LinkAuthenticationElement,
