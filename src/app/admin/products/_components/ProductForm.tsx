@@ -1,24 +1,25 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { formatCurrency } from "@/lib/formatters"
-import { useState } from "react"
-import { addProduct, updateProduct } from "../../_actions/products"
-import { useFormState, useFormStatus } from "react-dom"
-import { Product } from "@prisma/client"
-import Image from "next/image"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { formatCurrency } from "@/lib/formatters";
+import { useState } from "react";
+import { addProduct, updateProduct } from "../../_actions/products";
+import { useFormState, useFormStatus } from "react-dom";
+import { Product } from "@prisma/client";
+import Image from "next/image";
+import { Loader } from "lucide-react";
 
 export function ProductForm({ product }: { product?: Product | null }) {
   const [error, action] = useFormState(
     product == null ? addProduct : updateProduct.bind(null, product.id),
-    {}
-  )
+    {},
+  );
   const [priceInCents, setPriceInCents] = useState<number | undefined>(
-    product?.priceInCents
-  )
+    product?.priceInCents,
+  );
 
   return (
     <form action={action} className="space-y-8">
@@ -41,7 +42,7 @@ export function ProductForm({ product }: { product?: Product | null }) {
           name="priceInCents"
           required
           value={priceInCents}
-          onChange={e => setPriceInCents(Number(e.target.value) || undefined)}
+          onChange={(e) => setPriceInCents(Number(e.target.value) || undefined)}
         />
         <div className="text-muted-foreground">
           {formatCurrency((priceInCents || 0) / 100)}
@@ -85,15 +86,22 @@ export function ProductForm({ product }: { product?: Product | null }) {
       </div>
       <SubmitButton />
     </form>
-  )
+  );
 }
 
 function SubmitButton() {
-  const { pending } = useFormStatus()
+  const { pending } = useFormStatus();
 
   return (
     <Button type="submit" disabled={pending}>
-      {pending ? "Saving..." : "Save"}
+      {pending ? (
+        <div className="flex gap-2 items-center">
+          <Loader size="16" className="animate-spin" />
+          <span>Saving...</span>
+        </div>
+      ) : (
+        "Save"
+      )}
     </Button>
-  )
+  );
 }
