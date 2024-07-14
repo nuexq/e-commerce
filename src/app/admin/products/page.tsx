@@ -61,6 +61,7 @@ async function ProductsTable() {
           <TableHead className="w-0">
             <span className="sr-only">Available For Purchase</span>
           </TableHead>
+          <TableHead className="w-16">Image</TableHead>
           <TableHead>Name</TableHead>
           <TableHead>Price</TableHead>
           <TableHead>Orders</TableHead>
@@ -86,16 +87,14 @@ async function ProductsTable() {
               )}
             </TableCell>
             <TableCell>
-              <div className="flex gap-4 max-sm:flex-col">
-                <Image
-                  src={product.imagePath}
-                  alt={product.name}
-                  width={50}
-                  height={50}
-                />
-                <span>{product.name}</span>
-              </div>
+              <Image
+                src={product.imagePath}
+                alt={product.name}
+                width={60}
+                height={60}
+              />
             </TableCell>
+            <TableCell>{product.name}</TableCell>
             <TableCell>{formatCurrency(product.priceInCents / 100)}</TableCell>
             <TableCell>{formatNumber(product._count.orders)}</TableCell>
             <TableCell>
