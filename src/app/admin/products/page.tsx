@@ -114,7 +114,7 @@ async function ProductsTable() {
                     <a
                       download
                       href={`/admin/products/${product.id}/download`}
-                      className="flex gap-2 items-center"
+                      className="flex gap-3 items-center"
                     >
                       <Download size="14" />
                       Download
@@ -123,7 +123,7 @@ async function ProductsTable() {
                   <DropdownMenuItem asChild>
                     <Link
                       href={`/admin/products/${product.id}/edit`}
-                      className="flex gap-2 items-center"
+                      className="flex gap-3 items-center"
                     >
                       <Pencil size="14" />
                       Edit

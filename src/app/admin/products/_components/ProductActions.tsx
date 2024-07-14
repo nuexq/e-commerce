@@ -7,7 +7,7 @@ import {
   toggleProductAvailability,
 } from "../../_actions/products";
 import { useRouter } from "next/navigation";
-import { CircleCheck, CircleOff } from "lucide-react";
+import { CircleCheck, CircleOff, Trash2 } from "lucide-react";
 
 export function ActiveToggleDropdownItem({
   id,
@@ -29,12 +29,12 @@ export function ActiveToggleDropdownItem({
       }}
     >
       {isAvailableForPurchase ? (
-        <div className="flex gap-2 items-center justify-start">
+        <div className="flex gap-3 items-center justify-start">
           <CircleOff size={14} />
           <span>Deactivate</span>
         </div>
       ) : (
-        <div className="flex gap-2 items-center justify-start">
+        <div className="flex gap-3 items-center justify-start">
           <CircleCheck size={16} />
           <span>Activate</span>
         </div>
@@ -62,7 +62,9 @@ export function DeleteDropdownItem({
           router.refresh();
         });
       }}
+      className="flex gap-3 items-center"
     >
+      <Trash2 size="16" />
       Delete
     </DropdownMenuItem>
   );
