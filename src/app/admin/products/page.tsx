@@ -10,7 +10,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import db from "@/db/db";
-import { CheckCircle2, Download, MoreVertical, XCircle } from "lucide-react";
+import {
+  CheckCircle2,
+  Download,
+  MoreVertical,
+  Pencil,
+  XCircle,
+} from "lucide-react";
 import { formatCurrency, formatNumber } from "@/lib/formatters";
 import {
   DropdownMenu,
@@ -115,7 +121,11 @@ async function ProductsTable() {
                     </a>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
-                    <Link href={`/admin/products/${product.id}/edit`}>
+                    <Link
+                      href={`/admin/products/${product.id}/edit`}
+                      className="flex gap-2 items-center"
+                    >
+                      <Pencil size="14" />
                       Edit
                     </Link>
                   </DropdownMenuItem>
