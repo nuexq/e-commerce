@@ -1,29 +1,29 @@
-import { Button } from "@/components/ui/button";
-import db from "@/db/db";
-import { formatCurrency } from "@/lib/formations";
-import Image from "next/image";
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import Stripe from "stripe";
+import { Button } from "@/components/ui/button"
+import db from "@/db/db"
+import { formatCurrency } from "@/lib/formatters"
+import Image from "next/image"
+import Link from "next/link"
+import { notFound } from "next/navigation"
+import Stripe from "stripe"
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string)
 
 export default async function SuccessPage({
   searchParams,
 }: {
-  searchParams: { payment_intent: string };
+  searchParams: { payment_intent: string }
 }) {
   const paymentIntent = await stripe.paymentIntents.retrieve(
-    searchParams.payment_intent,
-  );
-  if (paymentIntent.metadata.productId == null) return notFound();
+    searchParams.payment_intent
+  )
+  if (paymentIntent.metadata.productId == null) return notFound()
 
   const product = await db.product.findUnique({
     where: { id: paymentIntent.metadata.productId },
-  });
-  if (product == null) return notFound();
+  })
+  if (product == null) return notFound()
 
-  const isSuccess = paymentIntent.status === "succeeded";
+  const isSuccess = paymentIntent.status === "succeeded"
 
   return (
     <div className="max-w-5xl w-full mx-auto space-y-8">
@@ -51,7 +51,7 @@ export default async function SuccessPage({
             {isSuccess ? (
               <a
                 href={`/products/download/${await createDownloadVerification(
-                  product.id,
+                  product.id
                 )}`}
               >
                 Download
@@ -63,7 +63,7 @@ export default async function SuccessPage({
         </div>
       </div>
     </div>
-  );
+  )
 }
 
 async function createDownloadVerification(productId: string) {
@@ -74,5 +74,5 @@ async function createDownloadVerification(productId: string) {
         expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24),
       },
     })
-  ).id;
+  ).id
 }
