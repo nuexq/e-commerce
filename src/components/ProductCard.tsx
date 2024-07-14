@@ -1,4 +1,4 @@
-import { formatCurrency } from "@/lib/formations";
+import { formatCurrency } from "@/lib/formatters"
 import {
   Card,
   CardContent,
@@ -6,24 +6,24 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import { Button } from "./ui/button";
-import Link from "next/link";
-import Image from "next/image";
+} from "./ui/card"
+import { Button } from "./ui/button"
+import Link from "next/link"
+import Image from "next/image"
 
 type ProductCardProps = {
-  name: string;
-  id: string;
-  priceInCents: number;
-  description: string;
-  imagePath: string;
-};
+  id: string
+  name: string
+  priceInCents: number
+  description: string
+  imagePath: string
+}
 
 export function ProductCard({
+  id,
   name,
   priceInCents,
   description,
-  id,
   imagePath,
 }: ProductCardProps) {
   return (
@@ -31,7 +31,7 @@ export function ProductCard({
       <div className="relative w-full h-auto aspect-video">
         <Image src={imagePath} fill alt={name} />
       </div>
-      <CardHeader className="gap-2">
+      <CardHeader>
         <CardTitle>{name}</CardTitle>
         <CardDescription>{formatCurrency(priceInCents / 100)}</CardDescription>
       </CardHeader>
@@ -39,12 +39,12 @@ export function ProductCard({
         <p className="line-clamp-4">{description}</p>
       </CardContent>
       <CardFooter>
-        <Button size="lg" className="w-full" asChild>
+        <Button asChild size="lg" className="w-full">
           <Link href={`/products/${id}/purchase`}>Purchase</Link>
         </Button>
       </CardFooter>
     </Card>
-  );
+  )
 }
 
 export function ProductCardSkeleton() {
@@ -68,5 +68,5 @@ export function ProductCardSkeleton() {
         <Button className="w-full" disabled size="lg"></Button>
       </CardFooter>
     </Card>
-  );
+  )
 }

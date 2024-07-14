@@ -7,23 +7,23 @@ import {
   Html,
   Preview,
   Tailwind,
-} from "@react-email/components";
-import { OrderInformation } from "./components/OrderInformation";
-import React from "react";
+} from "@react-email/components"
+import { OrderInformation } from "./components/OrderInformation"
+import React from "react"
 
 type OrderHistoryEmailProps = {
   orders: {
-    id: string;
-    pricePaidInCents: number;
-    createdAt: Date;
-    downloadVerificationId: string;
+    id: string
+    pricePaidInCents: number
+    createdAt: Date
+    downloadVerificationId: string
     product: {
-      name: string;
-      imagePath: string;
-      description: string;
-    };
-  }[];
-};
+      name: string
+      imagePath: string
+      description: string
+    }
+  }[]
+}
 
 OrderHistoryEmail.PreviewProps = {
   orders: [
@@ -52,7 +52,7 @@ OrderHistoryEmail.PreviewProps = {
       },
     },
   ],
-} satisfies OrderHistoryEmailProps;
+} satisfies OrderHistoryEmailProps
 
 export default function OrderHistoryEmail({ orders }: OrderHistoryEmailProps) {
   return (
@@ -77,5 +77,5 @@ export default function OrderHistoryEmail({ orders }: OrderHistoryEmailProps) {
         </Body>
       </Tailwind>
     </Html>
-  );
+  )
 }

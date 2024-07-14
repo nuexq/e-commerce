@@ -5,64 +5,65 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import db from "@/db/db";
+} from "@/components/ui/table"
+import db from "@/db/db"
+import { formatCurrency, formatNumber } from "@/lib/formatters"
+import { PageHeader } from "../_components/PageHeader"
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { MoreVertical } from "lucide-react";
-import { formatCurrency } from "@/lib/formations";
-import { PageHeader } from "../_components/pageHeader";
-import { DeleteDropDownItem } from "./_components/UserActions";
+} from "@/components/ui/dropdown-menu"
+import { MoreVertical } from "lucide-react"
+import { DeleteDropDownItem } from "./_components/UserActions"
 
-function getOrders() {
-  return db.order.findMany({
+function getUsers() {
+  return db.user.findMany({
     select: {
       id: true,
-      pricePaidInCents: true,
-      product: { select: { name: true } },
-      user: { select: { email: true } },
+      email: true,
+      orders: { select: { pricePaidInCents: true } },
     },
     orderBy: { createdAt: "desc" },
-  });
+  })
 }
 
-export default function OrdersPage() {
+export default function UsersPage() {
   return (
     <>
-      <PageHeader>Sales</PageHeader>
-      <OrdersTable />
+      <PageHeader>Customers</PageHeader>
+      <UsersTable />
     </>
-  );
+  )
 }
 
-async function OrdersTable() {
-  const orders = await getOrders();
+async function UsersTable() {
+  const users = await getUsers()
 
-  if (orders.length === 0) return <p>No sales found</p>;
+  if (users.length === 0) return <p>No customers found</p>
 
   return (
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead>Product</TableHead>
-          <TableHead>Customer</TableHead>
-          <TableHead>Price Paid</TableHead>
+          <TableHead>Email</TableHead>
+          <TableHead>Orders</TableHead>
+          <TableHead>Value</TableHead>
           <TableHead className="w-0">
             <span className="sr-only">Actions</span>
           </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {orders.map((order) => (
-          <TableRow key={order.id}>
-            <TableCell>{order.product.name}</TableCell>
-            <TableCell>{order.user.email}</TableCell>
+        {users.map(user => (
+          <TableRow key={user.id}>
+            <TableCell>{user.email}</TableCell>
+            <TableCell>{formatNumber(user.orders.length)}</TableCell>
             <TableCell>
-              {formatCurrency(order.pricePaidInCents / 100)}
+              {formatCurrency(
+                user.orders.reduce((sum, o) => o.pricePaidInCents + sum, 0) /
+                  100
+              )}
             </TableCell>
             <TableCell className="text-center">
               <DropdownMenu>
@@ -71,7 +72,7 @@ async function OrdersTable() {
                   <span className="sr-only">Actions</span>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DeleteDropDownItem id={order.id} />
+                  <DeleteDropDownItem id={user.id} />
                 </DropdownMenuContent>
               </DropdownMenu>
             </TableCell>
@@ -79,5 +80,5 @@ async function OrdersTable() {
         ))}
       </TableBody>
     </Table>
-  );
+  )
 }
