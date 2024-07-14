@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import db from "@/db/db";
-import { CheckCircle2, MoreVertical, XCircle } from "lucide-react";
+import { CheckCircle2, Download, MoreVertical, XCircle } from "lucide-react";
 import { formatCurrency, formatNumber } from "@/lib/formatters";
 import {
   DropdownMenu,
@@ -105,7 +105,12 @@ async function ProductsTable() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuItem asChild>
-                    <a download href={`/admin/products/${product.id}/download`}>
+                    <a
+                      download
+                      href={`/admin/products/${product.id}/download`}
+                      className="flex gap-2 items-center"
+                    >
+                      <Download size="14" />
                       Download
                     </a>
                   </DropdownMenuItem>
