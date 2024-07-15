@@ -80,6 +80,8 @@ To deploy the application, ensure that all environment variables are correctly s
 4. Commit your changes (`git commit -m 'Add some feature'`).
 5. Push to the branch (`git push origin feature-branch`).
 6. Open a pull request.
+> [!NOTE]
+> if you know how to deploy this project with the database in prisma please help me (you can change from SQL to postgres prisma provider)
 
 ## License
 
